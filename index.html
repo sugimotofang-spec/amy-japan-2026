@@ -4,127 +4,86 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <title>Amy — Japan 2026</title>
 <style>
-  :root {
-    --bg: #ffffff;
-    --bg-sec: #f5f5f3;
-    --bg-card: #ffffff;
-    --text: #1a1a18;
-    --text-sec: #6b6b66;
-    --text-hint: #9b9b96;
-    --border: rgba(0,0,0,0.10);
-    --border-med: rgba(0,0,0,0.18);
-    --blue-bg: #e6f1fb; --blue-text: #0c447c; --blue-mid: #378add;
-    --green-bg: #e1f5ee; --green-text: #085041; --green-mid: #1d9e75;
-    --amber-bg: #faeeda; --amber-text: #633806; --amber-mid: #ba7517;
-    --radius-sm: 8px; --radius-md: 12px; --radius-lg: 16px;
-    --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Sans', 'Noto Sans', sans-serif;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #141413; --bg-sec: #1e1e1c; --bg-card: #252523;
-      --text: #f0efea; --text-sec: #a0a09a; --text-hint: #6b6b66;
-      --border: rgba(255,255,255,0.10); --border-med: rgba(255,255,255,0.18);
-      --blue-bg: #0c447c; --blue-text: #b5d4f4;
-      --green-bg: #085041; --green-text: #9fe1cb;
-      --amber-bg: #633806; --amber-text: #fac775;
-    }
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-  html { font-size: 15px; }
-  body { font-family: var(--font); background: var(--bg-sec); color: var(--text); min-height: 100vh; }
-
-  /* Header */
-  .app-header { background: var(--bg); border-bottom: 0.5px solid var(--border); padding: 16px; position: sticky; top: 0; z-index: 100; }
-  .app-header-inner { max-width: 480px; margin: 0 auto; }
-  .header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
-  .header-name { font-size: 11px; color: var(--text-hint); letter-spacing: .05em; }
-  .header-title { font-size: 20px; font-weight: 600; color: var(--text); }
-  .header-sub { font-size: 12px; color: var(--text-sec); }
-  .lang-row { display: flex; gap: 6px; }
-  .lang-btn { padding: 6px 14px; border-radius: 20px; border: 0.5px solid var(--border-med); background: transparent; color: var(--text-sec); font-size: 12px; font-weight: 500; cursor: pointer; font-family: var(--font); transition: all .15s; }
-  .lang-btn.active { background: #042c53; color: #b5d4f4; border-color: transparent; }
-  @media (prefers-color-scheme: dark) { .lang-btn.active { background: #185fa5; color: #e6f1fb; } }
-
-  /* Stats */
-  .stats-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; padding: 12px 16px; max-width: 480px; margin: 0 auto; }
-  .stat { background: var(--bg-card); border-radius: var(--radius-sm); padding: 10px 12px; border: 0.5px solid var(--border); }
-  .stat-label { font-size: 10px; color: var(--text-hint); margin-bottom: 3px; text-transform: uppercase; letter-spacing: .06em; }
-  .stat-val { font-size: 14px; font-weight: 600; color: var(--text); }
-
-  /* Days */
-  .days-list { padding: 0 16px 32px; max-width: 480px; margin: 0 auto; display: flex; flex-direction: column; gap: 10px; }
-
-  /* City divider */
-  .city-divider { display: flex; align-items: center; gap: 8px; margin: 4px 0 2px; }
-  .city-divider-line { flex: 1; height: 0.5px; background: var(--border); }
-  .city-divider-label { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
-  .city-osaka .city-divider-label { color: var(--blue-mid); }
-  .city-kyoto .city-divider-label { color: var(--green-mid); }
-  .city-tokyo .city-divider-label { color: var(--amber-mid); }
-
-  /* Day card */
-  .day-card { background: var(--bg-card); border-radius: var(--radius-lg); border: 0.5px solid var(--border); overflow: hidden; }
-  .day-header { display: flex; align-items: center; gap: 12px; padding: 14px 16px; cursor: pointer; user-select: none; }
-  .day-header:active { background: var(--bg-sec); }
-  .day-badge { width: 42px; height: 42px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; flex-shrink: 0; font-size: 10px; font-weight: 700; line-height: 1.2; }
-  .badge-osaka { background: var(--blue-bg); color: var(--blue-text); }
-  .badge-kyoto { background: var(--green-bg); color: var(--green-text); }
-  .badge-tokyo { background: var(--amber-bg); color: var(--amber-text); }
-  .day-meta { flex: 1; min-width: 0; }
-  .day-date-text { font-size: 11px; color: var(--text-hint); margin-bottom: 2px; }
-  .day-label-text { font-size: 15px; font-weight: 600; color: var(--text); line-height: 1.3; }
-  .day-city-text { font-size: 11px; color: var(--text-sec); margin-top: 2px; }
-  .chevron { font-size: 18px; color: var(--text-hint); transition: transform .2s; flex-shrink: 0; }
-  .day-card.open .chevron { transform: rotate(180deg); }
-
-  /* Day body */
-  .day-body { display: none; border-top: 0.5px solid var(--border); padding: 0; }
-  .day-card.open .day-body { display: block; }
-
-  /* Transport pill */
-  .transport-pill { display: inline-flex; align-items: center; gap: 5px; background: var(--blue-bg); color: var(--blue-text); border-radius: 20px; padding: 5px 12px; font-size: 12px; font-weight: 500; margin: 12px 16px 0; }
-  @media (prefers-color-scheme: dark) { .transport-pill { background: #0c447c; color: #b5d4f4; } }
-
-  /* Hotel */
-  .hotel-block { display: flex; align-items: flex-start; gap: 10px; padding: 12px 16px; border-bottom: 0.5px solid var(--border); }
-  .hotel-icon { font-size: 18px; margin-top: 1px; flex-shrink: 0; }
-  .hotel-name { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
-  .hotel-addr { font-size: 12px; color: var(--text-sec); line-height: 1.5; }
-  .hotel-phone { font-size: 12px; color: var(--blue-mid); margin-top: 2px; }
-
-  /* Spots */
-  .spots-header { font-size: 11px; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; color: var(--text-hint); padding: 12px 16px 6px; }
-  .spot-item { padding: 10px 16px; border-top: 0.5px solid var(--border); }
-  .spot-name { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
-  .spot-meta { display: flex; flex-direction: column; gap: 3px; }
-  .spot-meta-row { display: flex; align-items: flex-start; gap: 5px; font-size: 12px; color: var(--text-sec); line-height: 1.5; }
-  .spot-meta-icon { flex-shrink: 0; margin-top: 1px; }
-
-  /* Note box */
-  .note-box { background: var(--bg-sec); border-radius: var(--radius-sm); padding: 10px 12px; margin: 12px 16px; font-size: 12px; color: var(--text-sec); line-height: 1.6; }
-  .note-box b { color: var(--text); }
-
-  /* Footer */
-  .app-footer { text-align: center; padding: 20px 16px; font-size: 11px; color: var(--text-hint); }
-
-  /* Smooth transitions */
-  .day-card { transition: box-shadow .15s; }
+:root{--bg:#fff;--bg-sec:#f5f5f3;--bg-card:#fff;--text:#1a1a18;--text-sec:#6b6b66;--text-hint:#9b9b96;--border:rgba(0,0,0,.10);--border-med:rgba(0,0,0,.18);--blue-bg:#e6f1fb;--blue-text:#0c447c;--blue-mid:#378add;--green-bg:#e1f5ee;--green-text:#085041;--green-mid:#1d9e75;--amber-bg:#faeeda;--amber-text:#633806;--amber-mid:#ba7517;--coral-bg:#faece7;--coral-text:#993c1d;--radius-sm:8px;--radius-md:12px;--radius-lg:16px;--font:-apple-system,BlinkMacSystemFont,'Segoe UI','Hiragino Sans','Noto Sans',sans-serif}
+@media(prefers-color-scheme:dark){:root{--bg:#141413;--bg-sec:#1e1e1c;--bg-card:#252523;--text:#f0efea;--text-sec:#a0a09a;--text-hint:#6b6b66;--border:rgba(255,255,255,.10);--border-med:rgba(255,255,255,.18);--blue-bg:#0c447c;--blue-text:#b5d4f4;--green-bg:#085041;--green-text:#9fe1cb;--amber-bg:#633806;--amber-text:#fac775;--coral-bg:#712b13;--coral-text:#f5c4b3}}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:var(--font);background:var(--bg-sec);color:var(--text);min-height:100vh}
+.app-header{background:var(--bg);border-bottom:.5px solid var(--border);padding:16px;position:sticky;top:0;z-index:100}
+.app-header-inner{max-width:480px;margin:0 auto}
+.header-title{font-size:20px;font-weight:700;margin-bottom:2px}
+.header-sub{font-size:12px;color:var(--text-sec);margin-bottom:12px}
+.lang-row{display:flex;gap:6px}
+.lang-btn{padding:6px 14px;border-radius:20px;border:.5px solid var(--border-med);background:transparent;color:var(--text-sec);font-size:12px;font-weight:500;cursor:pointer;font-family:var(--font)}
+.lang-btn.active{background:#042c53;color:#b5d4f4;border-color:transparent}
+@media(prefers-color-scheme:dark){.lang-btn.active{background:#185fa5;color:#e6f1fb}}
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:12px 16px;max-width:480px;margin:0 auto}
+.stat{background:var(--bg-card);border-radius:var(--radius-sm);padding:10px 12px;border:.5px solid var(--border)}
+.stat-label{font-size:10px;color:var(--text-hint);margin-bottom:3px;text-transform:uppercase;letter-spacing:.06em}
+.stat-val{font-size:14px;font-weight:700}
+.main{padding:0 16px 40px;max-width:480px;margin:0 auto;display:flex;flex-direction:column;gap:10px}
+/* City divider */
+.city-div{display:flex;align-items:center;gap:8px;margin:6px 0 2px}
+.city-div-line{flex:1;height:.5px;background:var(--border)}
+.city-div-label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.city-osaka .city-div-label{color:var(--blue-mid)}
+.city-kyoto .city-div-label{color:var(--green-mid)}
+.city-tokyo .city-div-label{color:var(--amber-mid)}
+/* Food card */
+.food-card{background:var(--bg-card);border-radius:var(--radius-lg);border:.5px solid var(--border);overflow:hidden}
+.food-header{display:flex;align-items:center;gap:10px;padding:12px 16px;background:var(--coral-bg);cursor:pointer}
+.food-header-icon{font-size:20px}
+.food-header-text{font-size:14px;font-weight:600;color:var(--coral-text)}
+.food-header-sub{font-size:11px;color:var(--coral-text);opacity:.8;margin-top:1px}
+.food-body{display:none;border-top:.5px solid var(--border)}
+.food-card.open .food-body{display:block}
+.food-item{display:flex;align-items:flex-start;gap:12px;padding:12px 16px;border-bottom:.5px solid var(--border)}
+.food-item:last-child{border-bottom:none}
+.food-stars{font-size:13px;flex-shrink:0;margin-top:1px}
+.food-info{}
+.food-name{font-size:13px;font-weight:600;color:var(--text);margin-bottom:2px}
+.food-meta{font-size:11px;color:var(--text-sec);line-height:1.5}
+.food-link{display:inline-block;margin-top:5px;font-size:11px;color:var(--blue-mid);text-decoration:none;border:.5px solid var(--blue-mid);border-radius:10px;padding:2px 8px}
+.food-tabelog{display:block;padding:10px 16px;font-size:12px;color:var(--blue-mid);text-align:center;border-top:.5px solid var(--border);text-decoration:none}
+/* Day card */
+.day-card{background:var(--bg-card);border-radius:var(--radius-lg);border:.5px solid var(--border);overflow:hidden}
+.day-header{display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer;user-select:none}
+.day-header:active{background:var(--bg-sec)}
+.day-badge{width:42px;height:42px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;font-size:10px;font-weight:700;line-height:1.2}
+.badge-osaka{background:var(--blue-bg);color:var(--blue-text)}
+.badge-kyoto{background:var(--green-bg);color:var(--green-text)}
+.badge-tokyo{background:var(--amber-bg);color:var(--amber-text)}
+.day-meta{flex:1;min-width:0}
+.day-date-text{font-size:11px;color:var(--text-hint);margin-bottom:2px}
+.day-label-text{font-size:15px;font-weight:600;line-height:1.3}
+.day-city-text{font-size:11px;color:var(--text-sec);margin-top:2px}
+.chevron{font-size:18px;color:var(--text-hint);transition:transform .2s;flex-shrink:0}
+.day-card.open .chevron{transform:rotate(180deg)}
+.day-body{display:none;border-top:.5px solid var(--border)}
+.day-card.open .day-body{display:block}
+.transport-pill{display:inline-flex;align-items:center;gap:5px;background:var(--blue-bg);color:var(--blue-text);border-radius:20px;padding:5px 12px;font-size:12px;font-weight:500;margin:12px 16px 0}
+.hotel-block{display:flex;align-items:flex-start;gap:10px;padding:12px 16px;border-bottom:.5px solid var(--border)}
+.hotel-name{font-size:13px;font-weight:600;margin-bottom:3px}
+.hotel-addr{font-size:12px;color:var(--text-sec);line-height:1.5}
+.hotel-phone{font-size:12px;color:var(--blue-mid);margin-top:2px}
+.spots-header{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--text-hint);padding:12px 16px 6px}
+.spot-item{padding:10px 16px;border-top:.5px solid var(--border)}
+.spot-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:4px}
+.spot-name{font-size:14px;font-weight:600;flex:1}
+.spot-rating{display:flex;flex-direction:column;align-items:flex-end;flex-shrink:0}
+.stars{font-size:12px;line-height:1}
+.rating-label{font-size:9px;color:var(--text-hint);margin-top:2px;text-align:right}
+.spot-meta-row{display:flex;align-items:flex-start;gap:5px;font-size:12px;color:var(--text-sec);line-height:1.5;margin-bottom:2px}
+.note-box{background:var(--bg-sec);border-radius:var(--radius-sm);padding:10px 12px;margin:12px 16px;font-size:12px;color:var(--text-sec);line-height:1.6}
+.app-footer{text-align:center;padding:20px 16px;font-size:11px;color:var(--text-hint)}
 </style>
 </head>
 <body>
-
 <header class="app-header">
   <div class="app-header-inner">
-    <div class="header-top">
-      <div>
-        <div class="header-name" id="h-traveler">Traveler</div>
-        <div class="header-title">Amy ✈ Japan 2026</div>
-        <div class="header-sub" id="h-dates">22 Jun (Mon) → 29 Jun (Mon) · 8 days</div>
-      </div>
-    </div>
+    <div class="header-title">Amy ✈ Japan 2026</div>
+    <div class="header-sub" id="h-dates">22 Jun → 29 Jun · 8 days</div>
     <div class="lang-row">
       <button class="lang-btn active" onclick="setLang('en',this)">English</button>
       <button class="lang-btn" onclick="setLang('zh',this)">繁體中文</button>
@@ -132,268 +91,286 @@
     </div>
   </div>
 </header>
-
 <div class="stats-row">
   <div class="stat"><div class="stat-label" id="sl-cities">Cities</div><div class="stat-val">3</div></div>
-  <div class="stat"><div class="stat-label" id="sl-nights">Nights</div><div class="stat-val" id="sv-nights">7</div></div>
+  <div class="stat"><div class="stat-label" id="sl-nights">Nights</div><div class="stat-val">7</div></div>
   <div class="stat"><div class="stat-label" id="sl-spots">Spots</div><div class="stat-val">28</div></div>
 </div>
-
-<div class="days-list" id="days-list"></div>
-
-<div class="app-footer" id="footer-text">Generated for Amy · Japan 2026</div>
+<div class="main" id="main"></div>
+<div class="app-footer" id="footer-text">Amy · Japan 2026</div>
 
 <script>
-const L = {
-  en: {
-    traveler:"Traveler", dates:"22 Jun (Mon) → 29 Jun (Mon) · 8 days",
-    cities:"Cities", nights:"Nights", nightsV:"7", spots:"Spots",
-    hotel:"Accommodation", spotsH:"Attractions", footer:"Generated for Amy · Japan 2026",
-    dayN:["Day 1","Day 2","Day 3","Day 4","Day 5","Day 6","Day 7","Day 8"],
-    addr:"Address", hours:"Hours", transport:"Transport"
+const L={
+  en:{dates:"22 Jun (Mon) → 29 Jun (Mon) · 8 days",cities:"Cities",nights:"Nights",spots:"Spots",spotsH:"Attractions",footer:"Generated for Amy · Japan 2026",dayN:["Day 1","Day 2","Day 3","Day 4","Day 5","Day 6","Day 7","Day 8"],ratingLabel:"Solo travel rating",foodTitle:"Local Food Picks",foodSub:"Must-try restaurants",tabelogLink:"Browse more on Tabelog →",hotelLabel:"Stay",transLabel:"Getting there"},
+  zh:{dates:"6月22日（一）→ 6月29日（一）· 共8天",cities:"城市",nights:"住宿晚數",spots:"景點數",spotsH:"景點",footer:"Amy 日本旅遊手冊 · 2026",dayN:["第1天","第2天","第3天","第4天","第5天","第6天","第7天","第8天"],ratingLabel:"女大生推薦指數",foodTitle:"當地美食推薦",foodSub:"精選必吃餐廳",tabelogLink:"在 Tabelog 看更多 →",hotelLabel:"住宿",transLabel:"交通"},
+  vi:{dates:"22/06 (Thứ 2) → 29/06 (Thứ 2) · 8 ngày",cities:"Thành phố",nights:"Số đêm",spots:"Điểm tham quan",spotsH:"Điểm tham quan",footer:"Cẩm nang Nhật Bản của Amy · 2026",dayN:["Ngày 1","Ngày 2","Ngày 3","Ngày 4","Ngày 5","Ngày 6","Ngày 7","Ngày 8"],ratingLabel:"Điểm đánh giá du lịch solo",foodTitle:"Ẩm thực địa phương",foodSub:"Nhà hàng đáng thử",tabelogLink:"Xem thêm trên Tabelog →",hotelLabel:"Chỗ ở",transLabel:"Di chuyển"}
+};
+
+// FOOD DATA per city
+const FOOD={
+  Osaka:{
+    tabelog:"https://tabelog.com/osaka/",
+    items:[
+      {name:{en:"Ichiran Ramen Dotonbori",zh:"一蘭拉麵 道頓堀店",vi:"Mì Ichiran Dotonbori"},type:{en:"Ramen · Solo booth dining",zh:"拉麵 · 獨享隔間",vi:"Mì ramen · Quầy ăn riêng"},price:"¥1,200",stars:5,maps:"https://maps.app.goo.gl/ichiran-dotonbori"},
+      {name:{en:"Okonomiyaki Kiji (Umeda)",zh:"好きやねん大阪 木地 梅田店",vi:"Okonomiyaki Kiji Umeda"},type:{en:"Okonomiyaki · Osaka soul food",zh:"大阪燒 · 道地庶民美食",vi:"Bánh xèo Nhật Osaka"},price:"¥900–1,500",stars:5,maps:"https://maps.app.goo.gl/kiji-umeda"},
+      {name:{en:"Kushikatsu Daruma Shinsekai",zh:"串炸 達摩 新世界本店",vi:"Kushikatsu Daruma Shinsekai"},type:{en:"Deep-fried skewers · Iconic Osaka",zh:"炸串 · 大阪代表性美食",vi:"Xiên chiên Osaka kiểu cổ điển"},price:"¥1,500–2,000",stars:4,maps:"https://maps.app.goo.gl/daruma-shinsekai"},
+      {name:{en:"Kuromon Market Breakfast",zh:"黑門市場 早市街食",vi:"Ăn sáng chợ Kuromon"},type:{en:"Fresh seafood · Morning market eats",zh:"新鮮海鮮 · 市場早餐",vi:"Hải sản tươi · Ăn sáng tại chợ"},price:"¥500–1,000",stars:4,maps:"https://maps.app.goo.gl/kuromon-market"},
+      {name:{en:"Takoyaki Wanaka Namba",zh:"章魚燒 和なか 難波店",vi:"Takoyaki Wanaka Namba"},type:{en:"Takoyaki · Osaka street classic",zh:"章魚燒 · 大阪必吃街頭小吃",vi:"Bánh bạch tuộc kiểu Osaka"},price:"¥600",stars:5,maps:"https://maps.app.goo.gl/wanaka-namba"}
+    ]
   },
-  zh: {
-    traveler:"旅行者", dates:"6月22日（一）→ 6月29日（一）· 共8天",
-    cities:"城市", nights:"住宿晚數", nightsV:"7", spots:"景點數",
-    hotel:"住宿", spotsH:"景點", footer:"Amy 日本旅遊手冊 · 2026",
-    dayN:["第1天","第2天","第3天","第4天","第5天","第6天","第7天","第8天"],
-    addr:"地址", hours:"開放時間", transport:"交通"
+  Kyoto:{
+    tabelog:"https://tabelog.com/kyoto/",
+    items:[
+      {name:{en:"Nishiki Market Street Food",zh:"錦市場 街頭小吃",vi:"Ăn vặt chợ Nishiki"},type:{en:"Various · Tofu, pickles, skewers",zh:"豆腐、醬菜、串燒等",vi:"Đậu phụ, dưa muối, xiên nướng"},price:"¥200–800",stars:5,maps:"https://maps.app.goo.gl/nishiki-food"},
+      {name:{en:"Kyoto Ramen Koji (Kyoto Station)",zh:"京都拉麵小路 京都車站",vi:"Kyoto Ramen Koji (Ga Kyoto)"},type:{en:"Ramen · 8 famous shops in one floor",zh:"拉麵 · 8家名店集中一層",vi:"Mì ramen · 8 tiệm nổi tiếng"},price:"¥900–1,200",stars:4,maps:"https://maps.app.goo.gl/kyoto-ramen-koji"},
+      {name:{en:"Kichi Kichi Omurice",zh:"Kichi Kichi 蛋包飯",vi:"Cơm trứng Kichi Kichi"},type:{en:"Omurice · Famous chef performance",zh:"蛋包飯 · 名廚現場表演料理",vi:"Cơm trứng cuộn nổi tiếng"},price:"¥1,800",stars:5,maps:"https://maps.app.goo.gl/kichi-kichi"},
+      {name:{en:"Pontocho Alley Izakaya",zh:"先斗町 居酒屋",vi:"Izakaya hẻm Pontocho"},type:{en:"Izakaya · Riverside atmospheric dining",zh:"居酒屋 · 河邊氛圍絕佳",vi:"Quán nhậu ven sông lãng mạn"},price:"¥2,000–3,000",stars:4,maps:"https://maps.app.goo.gl/pontocho-izakaya"}
+    ]
   },
-  vi: {
-    traveler:"Du khách", dates:"22/06 (Thứ 2) → 29/06 (Thứ 2) · 8 ngày",
-    cities:"Thành phố", nights:"Số đêm", nightsV:"7", spots:"Điểm tham quan",
-    hotel:"Chỗ ở", spotsH:"Điểm tham quan", footer:"Cẩm nang du lịch Nhật Bản của Amy · 2026",
-    dayN:["Ngày 1","Ngày 2","Ngày 3","Ngày 4","Ngày 5","Ngày 6","Ngày 7","Ngày 8"],
-    addr:"Địa chỉ", hours:"Giờ mở cửa", transport:"Di chuyển"
+  Tokyo:{
+    tabelog:"https://tabelog.com/tokyo/",
+    items:[
+      {name:{en:"Ichiran Ramen Shinjuku",zh:"一蘭拉麵 新宿店",vi:"Mì Ichiran Shinjuku"},type:{en:"Ramen · 24hr solo dining",zh:"拉麵 · 24小時獨享隔間",vi:"Mì ramen 24h quầy ăn riêng"},price:"¥1,200",stars:5,maps:"https://maps.app.goo.gl/ichiran-shinjuku"},
+      {name:{en:"Tsukiji Outer Market",zh:"築地場外市場",vi:"Chợ ngoài Tsukiji"},type:{en:"Sushi & street food · Morning only",zh:"壽司與街頭小吃 · 早上限定",vi:"Sushi & ăn vặt · Chỉ buổi sáng"},price:"¥500–2,000",stars:5,maps:"https://maps.app.goo.gl/tsukiji-outer"},
+      {name:{en:"Shibuya Genki Sushi",zh:"澀谷 元氣壽司",vi:"Sushi băng chuyền Shibuya"},type:{en:"Conveyor belt sushi · Fun & affordable",zh:"迴轉壽司 · 好玩又平價",vi:"Sushi băng chuyền vui nhộn"},price:"¥1,000–1,500",stars:4,maps:"https://maps.app.goo.gl/genki-sushi-shibuya"},
+      {name:{en:"Harajuku Crepes (Marion)",zh:"原宿可麗餅 Marion",vi:"Bánh crepe Harajuku Marion"},type:{en:"Crepes · Iconic Harajuku snack",zh:"可麗餅 · 原宿標誌性甜點",vi:"Crepe biểu tượng phố Harajuku"},price:"¥500–800",stars:4,maps:"https://maps.app.goo.gl/marion-crepes"},
+      {name:{en:"Omoide Yokocho Yakitori",zh:"思い出横丁 烤雞串",vi:"Yakitori hẻm Omoide Yokocho"},type:{en:"Yakitori · Atmospheric night alley",zh:"烤雞串 · 懷舊復古夜間小巷",vi:"Gà nướng xiên hẻm cổ điển"},price:"¥1,500–2,500",stars:5,maps:"https://maps.app.goo.gl/omoide-yokocho"}
+    ]
   }
 };
 
-const DAYS = [
-  {
-    city:"Osaka", badgeClass:"badge-osaka",
-    date:{en:"Mon, 22 Jun", zh:"6月22日（一）", vi:"Thứ 2, 22/06"},
-    label:{en:"Arrive in Osaka – check in", zh:"抵達大阪，辦理入住", vi:"Đến Osaka, nhận phòng"},
-    transport:{en:"Night arrival – head straight to hotel", zh:"夜間抵達，直接前往住宿", vi:"Đến vào tối, thẳng về khách sạn"},
-    hotel:{name:"Y's CABIN Osaka Namba", addr:{en:"2-2-9 Dotonbori, Chuo-ku, Osaka", zh:"大阪市中央區道頓堀 2-2-9", vi:"2-2-9 Dotonbori, Chuo-ku, Osaka"}, phone:"+81 6 6212 5578"},
-    spots:[
-      {name:{en:"Dotonbori – evening stroll", zh:"道頓堀夜間散策", vi:"Dạo phố Dotonbori buổi tối"},
-       addr:"Dotonbori, Chuo-ku, Osaka 542-0071",
-       hours:{en:"Streets 24/7 · Restaurants 11AM–2AM", zh:"街道全天 · 餐廳11AM–2AM", vi:"Phố 24/7 · Nhà hàng 11AM–2AM"}}
-    ]
-  },
-  {
-    city:"Osaka", badgeClass:"badge-osaka",
-    date:{en:"Tue, 23 Jun", zh:"6月23日（二）", vi:"Thứ 3, 23/06"},
-    label:{en:"Full day – Osaka sightseeing", zh:"大阪整日觀光", vi:"Cả ngày tham quan Osaka"},
-    transport:null,
-    hotel:{name:"Y's CABIN Osaka Namba", addr:{en:"2-2-9 Dotonbori, Chuo-ku, Osaka", zh:"大阪市中央區道頓堀 2-2-9", vi:"2-2-9 Dotonbori, Chuo-ku, Osaka"}, phone:"+81 6 6212 5578"},
-    spots:[
-      {name:{en:"National Bunraku Theatre", zh:"國立文樂劇場", vi:"Nhà hát Bunraku Quốc gia"},
-       addr:"1-12-10 Nipponbashi, Chuo-ku, Osaka 542-0073",
-       hours:{en:"10AM–6PM (later on show days)", zh:"10AM–6PM（演出日延長）", vi:"10AM–6PM (ngày diễn muộn hơn)"}},
-      {name:{en:"Kuromon Market", zh:"黑門市場", vi:"Chợ Kuromon"},
-       addr:"2-4-1 Nipponbashi, Chuo-ku, Osaka",
-       hours:{en:"Shops 8AM–6PM · Best 9AM–3PM", zh:"商家8AM–6PM · 最佳9AM–3PM", vi:"Cửa hàng 8AM–6PM · Tốt nhất 9AM–3PM"}},
-      {name:{en:"Osaka Castle", zh:"大阪城", vi:"Lâu đài Osaka"},
-       addr:"1-1 Osakajo, Chuo-ku, Osaka 540-0002",
-       hours:{en:"9AM–5PM · Last entry 4:30PM", zh:"9AM–5PM · 最晚入場4:30PM", vi:"9AM–5PM · Vào cửa cuối 4:30PM"}},
-      {name:{en:"Den Den Town (Nipponbashi)", zh:"電電城（日本橋）", vi:"Phố Den Den (Nipponbashi)"},
-       addr:"Nipponbashi, Chuo-ku, Osaka",
-       hours:{en:"11AM–8PM", zh:"11AM–8PM", vi:"11AM–8PM"}},
-      {name:{en:"Sumo Studio Osaka", zh:"大阪相撲體驗館", vi:"Studio Sumo Osaka"},
-       addr:"Osaka, Nishinari Ward",
-       hours:{en:"9:30AM–10PM", zh:"9:30AM–10PM", vi:"9:30AM–10PM"}}
-    ]
-  },
-  {
-    city:"Kyoto", badgeClass:"badge-kyoto",
-    date:{en:"Wed, 24 Jun", zh:"6月24日（三）", vi:"Thứ 4, 24/06"},
-    label:{en:"USJ → Kyoto (first night)", zh:"環球影城 → 京都（第一晚）", vi:"USJ → Kyoto (đêm đầu tiên)"},
-    transport:{en:"USJ morning → train Osaka→Kyoto afternoon · closed at 3:30AM", zh:"上午環球影城 → 下午搭火車至京都 · 閉園3:30AM", vi:"Sáng USJ → Chiều tàu Osaka→Kyoto · đóng cửa 3:30AM"},
-    hotel:{name:"Colours (カラーズ)", addr:{en:"Funawacho 660, Shimogyo-ku, Kyoto", zh:"京都市下京區船屋町660", vi:"Funawacho 660, Shimogyo-ku, Kyoto"}, phone:null},
-    spots:[
-      {name:{en:"Universal Studios Japan", zh:"日本環球影城 (USJ)", vi:"Universal Studios Japan (USJ)"},
-       addr:"2-1-33 Sakurajima, Konohana-ku, Osaka 554-0031",
-       hours:{en:"Opens 7AM · Park often closes 40 min before official time", zh:"7AM開門 · 實際閉園早40分鐘", vi:"Mở 7AM · Đóng sớm 40 phút so với chính thức"}},
-      {name:{en:"Pontocho Alley", zh:"先斗町", vi:"Hẻm Pontocho"},
-       addr:"Pontocho Alley, Nakagyo-ku, Kyoto 604-8014",
-       hours:{en:"Restaurants open ~5PM until midnight", zh:"餐廳約5PM開始，營業至午夜", vi:"Nhà hàng mở ~5PM đến nửa đêm"}},
-      {name:{en:"Kyoto Nishiki Nightmarket", zh:"錦市場夜市", vi:"Chợ đêm Nishiki"},
-       addr:"Nishiki Market, Nakagyo-ku, Kyoto 604-8055",
-       hours:{en:"Food trucks & crafts 3PM–10PM", zh:"餐車與手工藝品 3PM–10PM", vi:"Xe đồ ăn & thủ công 3PM–10PM"}}
-    ]
-  },
-  {
-    city:"Kyoto", badgeClass:"badge-kyoto",
-    date:{en:"Thu, 25 Jun", zh:"6月25日（四）", vi:"Thứ 5, 25/06"},
-    label:{en:"Full day – Kyoto temples & shrines", zh:"京都整日 — 神社寺廟巡禮", vi:"Cả ngày ở Kyoto – đền chùa"},
-    transport:null,
-    hotel:{name:"Colours (カラーズ)", addr:{en:"Funawacho 660, Shimogyo-ku, Kyoto", zh:"京都市下京區船屋町660", vi:"Funawacho 660, Shimogyo-ku, Kyoto"}, phone:null},
-    spots:[
-      {name:{en:"Fushimi Inari Taisha", zh:"伏見稻荷大社", vi:"Đền Fushimi Inari"},
-       addr:"68 Fukakusa Yabunouchi-cho, Fushimi-ku, Kyoto 612-0882",
-       hours:{en:"Open 24/7 · Full loop ~4 hrs · Short trail 1–2 hrs", zh:"全天開放 · 完整路線約4小時 · 短程1–2小時", vi:"Mở 24/7 · Vòng đầy đủ ~4 giờ · Đường ngắn 1–2 giờ"}},
-      {name:{en:"Kiyomizudera Temple", zh:"清水寺", vi:"Chùa Kiyomizudera"},
-       addr:"1-294 Kiyomizu, Higashiyama-ku, Kyoto 605-0862",
-       hours:{en:"6AM–6PM (Apr–Jun extended evening hours)", zh:"6AM–6PM（4–6月夜間延長開放）", vi:"6AM–6PM (tháng 4–6 mở thêm buổi tối)"}},
-      {name:{en:"Sennyu-ji Temple", zh:"泉涌寺", vi:"Chùa Sennyu-ji"},
-       addr:"27 Sennyu-ji Yamanouchi-cho, Higashiyama-ku, Kyoto",
-       hours:{en:"9AM–4:30PM · Last entry 4PM", zh:"9AM–4:30PM · 最晚入場4PM", vi:"9AM–4:30PM · Vào cửa cuối 4PM"}},
-      {name:{en:"Yasaka Shrine", zh:"八坂神社", vi:"Đền Yasaka"},
-       addr:"625 Gionmachi Kitagawa, Higashiyama-ku, Kyoto 605-0073",
-       hours:{en:"Open 24/7 · Free admission", zh:"全天開放 · 免費入場", vi:"Mở 24/7 · Miễn phí vào cổng"}},
-      {name:{en:"Heian Jingu Shrine", zh:"平安神宮", vi:"Đền Heian Jingu"},
-       addr:"97 Okazaki Nishitennocho, Sakyo-ku, Kyoto 606-8341",
-       hours:{en:"6AM–6PM (Mar 15 – Sep 30)", zh:"6AM–6PM（3月15日–9月30日）", vi:"6AM–6PM (15/3 – 30/9)"}}
-    ]
-  },
-  {
-    city:"Tokyo", badgeClass:"badge-tokyo",
-    date:{en:"Fri, 26 Jun", zh:"6月26日（五）", vi:"Thứ 6, 26/06"},
-    label:{en:"Kyoto → Tokyo – Shinjuku night", zh:"京都 → 東京，新宿夜間探索", vi:"Kyoto → Tokyo – đêm Shinjuku"},
-    transport:{en:"Breakfast in Kyoto → Shinkansen to Tokyo", zh:"早上在京都用餐 → 搭新幹線赴東京", vi:"Ăn sáng ở Kyoto → Shinkansen đến Tokyo"},
-    hotel:{name:"Booth Netcafé & Capsule", addr:{en:"1-15-5 Kabukicho, Shinjuku, Tokyo 160-0021", zh:"東京新宿區歌舞伎町1-15-5", vi:"1-15-5 Kabukicho, Shinjuku, Tokyo 160-0021"}, phone:"+81 3 3200 4922"},
-    spots:[
-      {name:{en:"Giant Godzilla Head (Toho Cinemas)", zh:"哥吉拉巨型頭像（東寶影城）", vi:"Đầu Godzilla khổng lồ (Toho Cinema)"},
-       addr:"1-19-1 Kabukicho, Shinjuku-ku, Tokyo 160-0021",
-       hours:{en:"Open 24 hours", zh:"全天開放", vi:"Mở 24 giờ"}},
-      {name:{en:"Omoide Yokocho – Memory Lane", zh:"思い出横丁（回憶小巷）", vi:"Omoide Yokocho – Phố Ký ức"},
-       addr:"1-2 Nishishinjuku, Shinjuku-ku, Tokyo 160-0023",
-       hours:{en:"Sweet spot 4:30–11:30PM · Peak atmosphere 9PM–5AM", zh:"最佳時段4:30–11:30PM · 氣氛最濃9PM–5AM", vi:"Tốt nhất 4:30–11:30PM · Đỉnh điểm 9PM–5AM"}},
-      {name:{en:"Shinjuku Golden Gai", zh:"新宿黃金街", vi:"Shinjuku Golden Gai"},
-       addr:"Shinjuku Golden Gai, Shinjuku-ku, Tokyo 160-0021",
-       hours:{en:"Most bars open 7–8PM, close around 5AM", zh:"多數酒吧7–8PM開始，約5AM關閉", vi:"Hầu hết bar mở 7–8PM, đóng khoảng 5AM"}}
-    ]
-  },
-  {
-    city:"Tokyo", badgeClass:"badge-tokyo",
-    date:{en:"Sat, 27 Jun", zh:"6月27日（六）", vi:"Thứ 7, 27/06"},
-    label:{en:"Full day – Asakusa · Harajuku · Shibuya", zh:"淺草 · 原宿 · 澀谷整日遊", vi:"Cả ngày – Asakusa · Harajuku · Shibuya"},
-    transport:null,
-    hotel:{name:"Booth Netcafé & Capsule", addr:{en:"1-15-5 Kabukicho, Shinjuku, Tokyo 160-0021", zh:"東京新宿區歌舞伎町1-15-5", vi:"1-15-5 Kabukicho, Shinjuku, Tokyo 160-0021"}, phone:null},
-    spots:[
-      {name:{en:"Senso-ji Temple", zh:"淺草寺", vi:"Chùa Senso-ji"},
-       addr:"2-3-1 Asakusa, Taito-ku, Tokyo 111-0032",
-       hours:{en:"Main Hall 6AM–5PM · Grounds 24/7 · Lit up nightly", zh:"本堂6AM–5PM · 境內全天 · 夜間點燈", vi:"Tòa chính 6AM–5PM · Khuôn viên 24/7 · Thắp đèn ban đêm"}},
-      {name:{en:"Nakamise Shopping Street", zh:"仲見世商店街", vi:"Phố mua sắm Nakamise"},
-       addr:"1-36-3 Asakusa, Taito-ku, Tokyo",
-       hours:{en:"10AM–5PM (varies by shop)", zh:"10AM–5PM（各店不同）", vi:"10AM–5PM (tùy cửa hàng)"}},
-      {name:{en:"Meiji Shrine", zh:"明治神宮", vi:"Đền Meiji Jingu"},
-       addr:"1-1 Yoyogikamizonocho, Shibuya, Tokyo 151-8557",
-       hours:{en:"June hours: 5AM–6:30PM", zh:"六月開放：5AM–6:30PM", vi:"Tháng 6: 5AM–6:30PM"}},
-      {name:{en:"Shibuya Crossing", zh:"澀谷十字路口", vi:"Ngã tư Shibuya"},
-       addr:"Shibuya Crossing, Shibuya, Tokyo",
-       hours:{en:"Open 24 hrs · Peak: 8–9AM & 5–9PM", zh:"全天開放 · 尖峰：8–9AM及5–9PM", vi:"Mở 24 giờ · Cao điểm: 8–9AM và 5–9PM"}}
-    ]
-  },
-  {
-    city:"Tokyo", badgeClass:"badge-tokyo",
-    date:{en:"Sun, 28 Jun", zh:"6月28日（日）", vi:"Chủ nhật, 28/06"},
-    label:{en:"Ghibli · Akihabara · Kabukicho", zh:"吉卜力美術館 · 秋葉原 · 歌舞伎町", vi:"Ghibli · Akihabara · Kabukicho"},
-    transport:null,
-    hotel:{name:"Booth Netcafé & Capsule", addr:{en:"1-15-5 Kabukicho, Shinjuku, Tokyo 160-0021", zh:"東京新宿區歌舞伎町1-15-5", vi:"1-15-5 Kabukicho, Shinjuku, Tokyo 160-0021"}, phone:null},
-    spots:[
-      {name:{en:"Ghibli Museum", zh:"吉卜力美術館", vi:"Bảo tàng Ghibli"},
-       addr:"1-1-83 Simorenjaku, Mitaka, Tokyo 181-0013",
-       hours:{en:"10AM–6PM · Reservation required", zh:"10AM–6PM · 需提前訂票", vi:"10AM–6PM · Cần đặt vé trước"}},
-      {name:{en:"Harry Potter Studio Tour", zh:"哈利波特影城體驗", vi:"Harry Potter Studio Tour"},
-       addr:"The Making of Harry Potter, Toshimaen, Nerima, Tokyo",
-       hours:{en:"8:30AM–7PM", zh:"8:30AM–7PM", vi:"8:30AM–7PM"}},
-      {name:{en:"Akihabara", zh:"秋葉原電器街", vi:"Khu phố Akihabara"},
-       addr:"Akihabara, Chiyoda-ku, Tokyo 101-0021",
-       hours:{en:"10AM–8PM daily", zh:"每日10AM–8PM", vi:"10AM–8PM hàng ngày"}},
-      {name:{en:"Kabukicho Entertainment District", zh:"歌舞伎町娛樂區", vi:"Khu giải trí Kabukicho"},
-       addr:"Kabukicho, Shinjuku-ku, Tokyo 160-0021",
-       hours:{en:"Open 24/7 · General area 7AM–8PM · Clubs until 5AM", zh:"全天開放 · 一般區7AM–8PM · 俱樂部至次日5AM", vi:"Mở 24/7 · Khu vực chung 7AM–8PM · Club đến 5AM"}},
-      {name:{en:"Kabukicho Tower", zh:"歌舞伎町塔", vi:"Tháp Kabukicho"},
-       addr:"1-29-1 Kabukicho, Shinjuku-ku, Tokyo 160-0021",
-       hours:{en:"10AM–5PM (contact for details)", zh:"10AM–5PM（詳情請洽各店）", vi:"10AM–5PM (liên hệ để biết chi tiết)"}}
-    ]
-  },
-  {
-    city:"Tokyo", badgeClass:"badge-tokyo",
-    date:{en:"Mon, 29 Jun", zh:"6月29日（一）", vi:"Thứ 2, 29/06"},
-    label:{en:"Departure — fly home", zh:"返台日 — 出發回台灣", vi:"Ngày về — bay về nhà"},
-    transport:{en:"Breakfast then transfer to airport", zh:"早餐後前往機場", vi:"Ăn sáng rồi ra sân bay"},
-    hotel:null,
-    spots:[]
-  }
+// RATING: stars, reason
+const DAYS=[
+  {city:"Osaka",badgeClass:"badge-osaka",
+   date:{en:"Mon, 22 Jun",zh:"6月22日（一）",vi:"Thứ 2, 22/06"},
+   label:{en:"Arrive in Osaka",zh:"抵達大阪",vi:"Đến Osaka"},
+   transport:{en:"Night arrival → check in",zh:"夜間抵達 → 辦理入住",vi:"Đến tối → nhận phòng"},
+   hotel:{name:"Y's CABIN Osaka Namba",addr:{en:"2-2-9 Dotonbori, Chuo-ku, Osaka",zh:"大阪市中央區道頓堀 2-2-9",vi:"2-2-9 Dotonbori, Chuo-ku, Osaka"},phone:"+81 6 6212 5578"},
+   spots:[
+     {name:{en:"Dotonbori – evening stroll",zh:"道頓堀夜間散策",vi:"Dạo phố Dotonbori buổi tối"},
+      addr:"Dotonbori, Chuo-ku, Osaka 542-0071",
+      hours:{en:"Streets 24/7 · Restaurants 11AM–2AM",zh:"街道全天 · 餐廳11AM–2AM",vi:"Phố 24/7 · Nhà hàng 11AM–2AM"},
+      rating:5,reason:{en:"Iconic neon lights, great food & photos – perfect first night!",zh:"霓虹燈超上相，美食聚集，第一晚必來！",vi:"Ánh đèn neon lung linh, ẩm thực phong phú – hoàn hảo cho đêm đầu!"}}
+   ]},
+  {city:"Osaka",badgeClass:"badge-osaka",
+   date:{en:"Tue, 23 Jun",zh:"6月23日（二）",vi:"Thứ 3, 23/06"},
+   label:{en:"Full day – Osaka sightseeing",zh:"大阪整日觀光",vi:"Cả ngày tham quan Osaka"},
+   transport:null,
+   hotel:{name:"Y's CABIN Osaka Namba",addr:{en:"2-2-9 Dotonbori, Chuo-ku, Osaka",zh:"大阪市中央區道頓堀 2-2-9",vi:"2-2-9 Dotonbori, Chuo-ku, Osaka"},phone:"+81 6 6212 5578"},
+   spots:[
+     {name:{en:"National Bunraku Theatre",zh:"國立文樂劇場",vi:"Nhà hát Bunraku Quốc gia"},
+      addr:"1-12-10 Nipponbashi, Chuo-ku, Osaka",
+      hours:{en:"10AM–6PM (later on show days)",zh:"10AM–6PM（演出日延長）",vi:"10AM–6PM (ngày diễn muộn hơn)"},
+      rating:2,reason:{en:"Niche traditional puppet theatre – skip unless you love Bunraku.",zh:"傳統人形淨琉璃，非愛好者可跳過",vi:"Nhà hát rối truyền thống – bỏ qua nếu không yêu thích"}},
+     {name:{en:"Kuromon Market",zh:"黑門市場",vi:"Chợ Kuromon"},
+      addr:"2-4-1 Nipponbashi, Chuo-ku, Osaka",
+      hours:{en:"Shops 8AM–6PM · Best 9AM–3PM",zh:"商家8AM–6PM · 最佳9AM–3PM",vi:"8AM–6PM · Tốt nhất 9AM–3PM"},
+      rating:4,reason:{en:"Fresh seafood, great street food – go hungry in the morning!",zh:"新鮮海鮮、道地街食，早上空腹去最適合！",vi:"Hải sản tươi, ăn vặt ngon – nên đi lúc đói buổi sáng!"}},
+     {name:{en:"Osaka Castle",zh:"大阪城",vi:"Lâu đài Osaka"},
+      addr:"1-1 Osakajo, Chuo-ku, Osaka 540-0002",
+      hours:{en:"9AM–5PM · Last entry 4:30PM",zh:"9AM–5PM · 最晚入場4:30PM",vi:"9AM–5PM · Vào cửa cuối 4:30PM"},
+      rating:4,reason:{en:"Beautiful grounds & city views – exterior is the star, interior museum is basic.",zh:"外觀與庭園超美，內部博物館普通，打卡必去",vi:"Khuôn viên đẹp, view thành phố tuyệt – phần ngoài đẹp hơn bên trong"}},
+     {name:{en:"Den Den Town (Nipponbashi)",zh:"電電城（日本橋）",vi:"Phố Den Den (Nipponbashi)"},
+      addr:"Nipponbashi, Chuo-ku, Osaka",
+      hours:{en:"11AM–8PM",zh:"11AM–8PM",vi:"11AM–8PM"},
+      rating:3,reason:{en:"Fun for anime & tech fans; skip if not your vibe.",zh:"動漫電玩迷必逛，否則可跳過",vi:"Thiên đường anime & công nghệ – bỏ qua nếu không hợp"}},
+     {name:{en:"Sumo Studio Osaka",zh:"大阪相撲體驗館",vi:"Studio Sumo Osaka"},
+      addr:"Osaka, Nishinari Ward",
+      hours:{en:"9:30AM–10PM",zh:"9:30AM–10PM",vi:"9:30AM–10PM"},
+      rating:3,reason:{en:"Unique cultural experience, fun for photos – not essential.",zh:"文化體驗有趣，適合打卡，非必去",vi:"Trải nghiệm văn hóa thú vị – không bắt buộc"}}
+   ]},
+  {city:"Kyoto",badgeClass:"badge-kyoto",
+   date:{en:"Wed, 24 Jun",zh:"6月24日（三）",vi:"Thứ 4, 24/06"},
+   label:{en:"USJ → Kyoto (first night)",zh:"環球影城 → 京都（第一晚）",vi:"USJ → Kyoto (đêm đầu tiên)"},
+   transport:{en:"USJ morning → train Osaka→Kyoto afternoon",zh:"上午環球影城 → 下午搭火車至京都",vi:"Sáng USJ → Chiều tàu Osaka→Kyoto"},
+   hotel:{name:"Colours (カラーズ)",addr:{en:"Funawacho 660, Shimogyo-ku, Kyoto",zh:"京都市下京區船屋町660",vi:"Funawacho 660, Shimogyo-ku, Kyoto"},phone:null},
+   spots:[
+     {name:{en:"Universal Studios Japan (USJ)",zh:"日本環球影城",vi:"Universal Studios Japan (USJ)"},
+      addr:"2-1-33 Sakurajima, Konohana-ku, Osaka 554-0031",
+      hours:{en:"Opens 7AM · Closes ~40 min before official time",zh:"7AM開門 · 實際閉園早40分鐘",vi:"Mở 7AM · Đóng sớm ~40 phút"},
+      rating:5,reason:{en:"Super fun full-day experience – Harry Potter & Mario World are unmissable!",zh:"超好玩整日行程，哈利波特＆馬力歐世界必玩！",vi:"Cực vui cả ngày – Khu Harry Potter & Mario World không thể bỏ lỡ!"}},
+     {name:{en:"Pontocho Alley",zh:"先斗町",vi:"Hẻm Pontocho"},
+      addr:"Pontocho Alley, Nakagyo-ku, Kyoto 604-8014",
+      hours:{en:"Restaurants open ~5PM until midnight",zh:"餐廳約5PM開始，營業至午夜",vi:"Nhà hàng mở ~5PM đến nửa đêm"},
+      rating:5,reason:{en:"Atmospheric narrow alley with riverside dining – beautiful at night!",zh:"窄巷河畔餐廳，夜晚氛圍絕美！",vi:"Hẻm nhỏ lãng mạn ven sông – đẹp nhất về đêm!"}},
+     {name:{en:"Kyoto Nishiki Nightmarket",zh:"錦市場夜市",vi:"Chợ đêm Nishiki"},
+      addr:"Nishiki Market, Nakagyo-ku, Kyoto 604-8055",
+      hours:{en:"Food trucks & crafts 3PM–10PM",zh:"餐車與手工藝品 3PM–10PM",vi:"Xe đồ ăn & thủ công 3PM–10PM"},
+      rating:3,reason:{en:"Nice stroll but daytime market is better – evening version is smaller.",zh:"日間版更豐富，夜市規模較小",vi:"Chợ ban ngày phong phú hơn – chợ đêm nhỏ hơn"}}
+   ]},
+  {city:"Kyoto",badgeClass:"badge-kyoto",
+   date:{en:"Thu, 25 Jun",zh:"6月25日（四）",vi:"Thứ 5, 25/06"},
+   label:{en:"Full day – Kyoto temples & shrines",zh:"京都整日 — 神社寺廟巡禮",vi:"Cả ngày ở Kyoto – đền chùa"},
+   transport:null,
+   hotel:{name:"Colours (カラーズ)",addr:{en:"Funawacho 660, Shimogyo-ku, Kyoto",zh:"京都市下京區船屋町660",vi:"Funawacho 660, Shimogyo-ku, Kyoto"},phone:null},
+   spots:[
+     {name:{en:"Fushimi Inari Taisha",zh:"伏見稻荷大社",vi:"Đền Fushimi Inari"},
+      addr:"68 Fukakusa Yabunouchi-cho, Fushimi-ku, Kyoto",
+      hours:{en:"Open 24/7 · Full loop ~4 hrs · Short trail 1–2 hrs",zh:"全天開放 · 完整路線約4小時 · 短程1–2小時",vi:"Mở 24/7 · Vòng đầy đủ ~4 giờ · Đường ngắn 1–2 giờ"},
+      rating:5,reason:{en:"Thousands of red torii gates – the most iconic photo spot in Japan. Go early!",zh:"千本鳥居，日本最上相景點！早去人少最美",vi:"Hàng nghìn cổng torii đỏ – điểm check-in đỉnh nhất Nhật Bản. Đi sớm!"}},
+     {name:{en:"Kiyomizudera Temple",zh:"清水寺",vi:"Chùa Kiyomizudera"},
+      addr:"1-294 Kiyomizu, Higashiyama-ku, Kyoto 605-0862",
+      hours:{en:"6AM–6PM (Apr–Jun extended hours)",zh:"6AM–6PM（4–6月夜間延長開放）",vi:"6AM–6PM (tháng 4–6 mở thêm)"},
+      rating:5,reason:{en:"Stunning wooden stage with mountain views – a must-see in Kyoto!",zh:"木造舞台俯瞰山景，京都必訪！",vi:"Sân khấu gỗ với tầm nhìn núi tuyệt đẹp – bắt buộc phải đến!"}},
+     {name:{en:"Sennyu-ji Temple",zh:"泉涌寺",vi:"Chùa Sennyu-ji"},
+      addr:"27 Sennyu-ji Yamanouchi-cho, Higashiyama-ku, Kyoto",
+      hours:{en:"9AM–4:30PM · Last entry 4PM",zh:"9AM–4:30PM · 最晚入場4PM",vi:"9AM–4:30PM · Vào cửa cuối 4PM"},
+      rating:2,reason:{en:"Quiet imperial temple – skip if you're temple-fatigued.",zh:"寧靜皇室寺廟，若寺廟疲勞可跳過",vi:"Chùa hoàng gia yên tĩnh – bỏ qua nếu đã chán đền chùa"}},
+     {name:{en:"Yasaka Shrine",zh:"八坂神社",vi:"Đền Yasaka"},
+      addr:"625 Gionmachi Kitagawa, Higashiyama-ku, Kyoto",
+      hours:{en:"Open 24/7 · Free admission",zh:"全天開放 · 免費入場",vi:"Mở 24/7 · Miễn phí"},
+      rating:4,reason:{en:"Free, beautiful, central to Gion – great evening visit with lanterns.",zh:"免費入場，位於祇園中心，夜晚燈籠超美",vi:"Miễn phí, đẹp, trung tâm Gion – tuyệt vào buổi tối có đèn lồng"}},
+     {name:{en:"Heian Jingu Shrine",zh:"平安神宮",vi:"Đền Heian Jingu"},
+      addr:"97 Okazaki Nishitennocho, Sakyo-ku, Kyoto 606-8341",
+      hours:{en:"6AM–6PM (Mar 15 – Sep 30)",zh:"6AM–6PM（3月15日–9月30日）",vi:"6AM–6PM (15/3 – 30/9)"},
+      rating:3,reason:{en:"Grand but takes time to walk – the garden is the highlight.",zh:"宏偉但步行費時，庭園是亮點",vi:"Hoành tráng nhưng tốn thời gian – vườn hoa là điểm nổi bật"}}
+   ]},
+  {city:"Tokyo",badgeClass:"badge-tokyo",
+   date:{en:"Fri, 26 Jun",zh:"6月26日（五）",vi:"Thứ 6, 26/06"},
+   label:{en:"Kyoto → Tokyo – Shinjuku night",zh:"京都 → 東京，新宿夜間探索",vi:"Kyoto → Tokyo – đêm Shinjuku"},
+   transport:{en:"Breakfast in Kyoto → Shinkansen to Tokyo",zh:"早上在京都用餐 → 搭新幹線赴東京",vi:"Ăn sáng ở Kyoto → Shinkansen đến Tokyo"},
+   hotel:{name:"Booth Netcafé & Capsule",addr:{en:"1-15-5 Kabukicho, Shinjuku, Tokyo 160-0021",zh:"東京新宿區歌舞伎町1-15-5",vi:"1-15-5 Kabukicho, Shinjuku, Tokyo 160-0021"},phone:"+81 3 3200 4922"},
+   spots:[
+     {name:{en:"Giant Godzilla Head",zh:"哥吉拉巨型頭像",vi:"Đầu Godzilla khổng lồ"},
+      addr:"1-19-1 Kabukicho, Shinjuku-ku, Tokyo",
+      hours:{en:"Open 24 hours",zh:"全天開放",vi:"Mở 24 giờ"},
+      rating:3,reason:{en:"Fun quick stop for a photo – don't go out of your way.",zh:"路過拍照打卡，不必專程前往",vi:"Dừng chân chụp ảnh nhanh – không cần đi xa để đến"}},
+     {name:{en:"Omoide Yokocho – Memory Lane",zh:"思い出横丁（回憶小巷）",vi:"Omoide Yokocho – Phố Ký ức"},
+      addr:"1-2 Nishishinjuku, Shinjuku-ku, Tokyo",
+      hours:{en:"Sweet spot 4:30–11:30PM · Peak 9PM–5AM",zh:"最佳時段4:30–11:30PM · 氣氛最濃9PM–5AM",vi:"Tốt nhất 4:30–11:30PM · Đỉnh điểm 9PM–5AM"},
+      rating:5,reason:{en:"Tiny smoky yakitori bars – incredible atmosphere, eat here for dinner!",zh:"迷你燒鳥居酒屋，氛圍絕佳，強烈推薦來這吃晚餐！",vi:"Quán yakitori nhỏ khói bay nghi ngút – không khí tuyệt vời, ăn tối ở đây!"}},
+     {name:{en:"Shinjuku Golden Gai",zh:"新宿黃金街",vi:"Shinjuku Golden Gai"},
+      addr:"Shinjuku Golden Gai, Shinjuku-ku, Tokyo",
+      hours:{en:"Most bars open 7–8PM, close ~5AM",zh:"多數酒吧7–8PM開始，約5AM關閉",vi:"Hầu hết bar mở 7–8PM, đóng ~5AM"},
+      rating:4,reason:{en:"200+ tiny themed bars – unique Tokyo nightlife, great for solo travelers!",zh:"200多家迷你主題酒吧，獨旅女生超適合！",vi:"200+ quán bar theo chủ đề – hoàn hảo cho du khách solo!"}}
+   ]},
+  {city:"Tokyo",badgeClass:"badge-tokyo",
+   date:{en:"Sat, 27 Jun",zh:"6月27日（六）",vi:"Thứ 7, 27/06"},
+   label:{en:"Asakusa · Harajuku · Shibuya",zh:"淺草 · 原宿 · 澀谷",vi:"Asakusa · Harajuku · Shibuya"},
+   transport:null,
+   hotel:{name:"Booth Netcafé & Capsule",addr:{en:"1-15-5 Kabukicho, Shinjuku, Tokyo 160-0021",zh:"東京新宿區歌舞伎町1-15-5",vi:"1-15-5 Kabukicho, Shinjuku, Tokyo 160-0021"},phone:null},
+   spots:[
+     {name:{en:"Senso-ji Temple",zh:"淺草寺",vi:"Chùa Senso-ji"},
+      addr:"2-3-1 Asakusa, Taito-ku, Tokyo 111-0032",
+      hours:{en:"Main Hall 6AM–5PM · Grounds 24/7",zh:"本堂6AM–5PM · 境內全天",vi:"Tòa chính 6AM–5PM · Khuôn viên 24/7"},
+      rating:5,reason:{en:"Tokyo's most iconic temple – beautiful gate, great shopping street!",zh:"東京最具代表性寺廟，仲見世商店街必逛！",vi:"Ngôi đền biểu tượng nhất Tokyo – cổng đẹp, phố mua sắm tuyệt!"}},
+     {name:{en:"Nakamise Shopping Street",zh:"仲見世商店街",vi:"Phố mua sắm Nakamise"},
+      addr:"1-36-3 Asakusa, Taito-ku, Tokyo",
+      hours:{en:"10AM–5PM (varies by shop)",zh:"10AM–5PM（各店不同）",vi:"10AM–5PM (tùy cửa hàng)"},
+      rating:4,reason:{en:"Traditional snacks & souvenirs – great for gifts and street food!",zh:"和風零食與伴手禮，適合買禮物與街頭小吃",vi:"Đồ ăn vặt & quà lưu niệm truyền thống – mua quà rất tốt!"}},
+     {name:{en:"Meiji Shrine",zh:"明治神宮",vi:"Đền Meiji Jingu"},
+      addr:"1-1 Yoyogikamizonocho, Shibuya, Tokyo",
+      hours:{en:"June: 5AM–6:30PM",zh:"六月開放：5AM–6:30PM",vi:"Tháng 6: 5AM–6:30PM"},
+      rating:4,reason:{en:"Peaceful forested shrine in the middle of the city – serene contrast to Harajuku!",zh:"鬧市中的靜謐森林神社，與原宿形成完美對比！",vi:"Đền yên tĩnh giữa rừng cây trong thành phố – tương phản hoàn hảo với Harajuku!"}},
+     {name:{en:"Shibuya Crossing",zh:"澀谷十字路口",vi:"Ngã tư Shibuya"},
+      addr:"Shibuya Crossing, Shibuya, Tokyo",
+      hours:{en:"Open 24 hrs · Peak: 8–9AM & 5–9PM",zh:"全天開放 · 尖峰：8–9AM及5–9PM",vi:"Mở 24 giờ · Cao điểm: 8–9AM và 5–9PM"},
+      rating:5,reason:{en:"World's busiest crossing – iconic photo & video moment. Evening is the best!",zh:"全球最繁忙路口，晚間最壯觀，必拍！",vi:"Ngã tư đông đúc nhất thế giới – chụp ảnh/quay video cực đẹp. Buổi tối đẹp nhất!"}}
+   ]},
+  {city:"Tokyo",badgeClass:"badge-tokyo",
+   date:{en:"Sun, 28 Jun",zh:"6月28日（日）",vi:"Chủ nhật, 28/06"},
+   label:{en:"Ghibli · Akihabara · Kabukicho",zh:"吉卜力 · 秋葉原 · 歌舞伎町",vi:"Ghibli · Akihabara · Kabukicho"},
+   transport:null,
+   hotel:{name:"Booth Netcafé & Capsule",addr:{en:"1-15-5 Kabukicho, Shinjuku, Tokyo 160-0021",zh:"東京新宿區歌舞伎町1-15-5",vi:"1-15-5 Kabukicho, Shinjuku, Tokyo 160-0021"},phone:null},
+   spots:[
+     {name:{en:"Ghibli Museum",zh:"吉卜力美術館",vi:"Bảo tàng Ghibli"},
+      addr:"1-1-83 Simorenjaku, Mitaka, Tokyo 181-0013",
+      hours:{en:"10AM–6PM · Reservation required",zh:"10AM–6PM · 需提前訂票",vi:"10AM–6PM · Cần đặt vé trước"},
+      rating:5,reason:{en:"Magical Studio Ghibli museum – book tickets months ahead, totally worth it!",zh:"夢幻吉卜力博物館，需提前數月訂票，超值得！",vi:"Bảo tàng Ghibli huyền diệu – đặt vé trước vài tháng, hoàn toàn xứng đáng!"}},
+     {name:{en:"Harry Potter Studio Tour",zh:"哈利波特影城體驗",vi:"Harry Potter Studio Tour"},
+      addr:"Toshimaen, Nerima, Tokyo",
+      hours:{en:"8:30AM–7PM",zh:"8:30AM–7PM",vi:"8:30AM–7PM"},
+      rating:4,reason:{en:"Immersive HP experience – amazing for fans, pricey but worth it.",zh:"哈利波特迷必訪，沉浸體驗超值，票價略高",vi:"Trải nghiệm Harry Potter sống động – tuyệt cho fan, hơi đắt nhưng xứng đáng"}},
+     {name:{en:"Akihabara",zh:"秋葉原電器街",vi:"Khu phố Akihabara"},
+      addr:"Akihabara, Chiyoda-ku, Tokyo 101-0021",
+      hours:{en:"10AM–8PM daily",zh:"每日10AM–8PM",vi:"10AM–8PM hàng ngày"},
+      rating:4,reason:{en:"Anime, manga & tech heaven – even non-fans enjoy the wild energy!",zh:"動漫、電玩天堂，即使不是迷也會被氛圍感染！",vi:"Thiên đường anime & công nghệ – ngay cả người không mê cũng thích không khí này!"}},
+     {name:{en:"Kabukicho Entertainment District",zh:"歌舞伎町娛樂區",vi:"Khu giải trí Kabukicho"},
+      addr:"Kabukicho, Shinjuku-ku, Tokyo 160-0021",
+      hours:{en:"Open 24/7 · Clubs until 5AM",zh:"全天開放 · 俱樂部至次日5AM",vi:"Mở 24/7 · Club đến 5AM"},
+      rating:3,reason:{en:"Lively but be cautious at night as a solo female – stick to main streets.",zh:"熱鬧但女生獨旅夜間需注意，走主要街道即可",vi:"Sầm uất nhưng nữ đi một mình cần cẩn thận ban đêm – chỉ đi đường chính"}},
+     {name:{en:"Kabukicho Tower",zh:"歌舞伎町塔",vi:"Tháp Kabukicho"},
+      addr:"1-29-1 Kabukicho, Shinjuku-ku, Tokyo",
+      hours:{en:"10AM–5PM",zh:"10AM–5PM",vi:"10AM–5PM"},
+      rating:3,reason:{en:"New landmark tower – nice views but not essential.",zh:"新地標，視野不錯但非必訪",vi:"Tòa tháp mới – view đẹp nhưng không bắt buộc"}}
+   ]},
+  {city:"Tokyo",badgeClass:"badge-tokyo",
+   date:{en:"Mon, 29 Jun",zh:"6月29日（一）",vi:"Thứ 2, 29/06"},
+   label:{en:"Departure — fly home",zh:"返台日 — 出發回台灣",vi:"Ngày về — bay về nhà"},
+   transport:{en:"Breakfast then transfer to airport",zh:"早餐後前往機場",vi:"Ăn sáng rồi ra sân bay"},
+   hotel:null,spots:[]}
 ];
 
-let lang = 'en';
-let openIdx = null;
+let lang='en';
+function setLang(l,btn){lang=l;document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');const lx=L[l];document.getElementById('h-dates').textContent=lx.dates;document.getElementById('sl-cities').textContent=lx.cities;document.getElementById('sl-nights').textContent=lx.nights;document.getElementById('sl-spots').textContent=lx.spots;document.getElementById('footer-text').textContent=lx.footer;render();}
+function toggleCard(id){const el=document.getElementById(id);if(el)el.classList.toggle('open');}
+function starsHTML(n){return'★'.repeat(n)+'☆'.repeat(5-n);}
+function esc(s){return s?s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'):''}
 
-function setLang(l, btn) {
-  lang = l;
-  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  const lx = L[l];
-  document.getElementById('h-traveler').textContent = lx.traveler;
-  document.getElementById('h-dates').textContent = lx.dates;
-  document.getElementById('sl-cities').textContent = lx.cities;
-  document.getElementById('sl-nights').textContent = lx.nights;
-  document.getElementById('sl-spots').textContent = lx.spots;
-  document.getElementById('footer-text').textContent = lx.footer;
-  renderDays();
-}
+function render(){
+  const lx=L[lang];
+  const container=document.getElementById('main');
+  container.innerHTML='';
+  let lastCity=null;
 
-function toggleDay(idx) {
-  const card = document.getElementById('card-' + idx);
-  if (card.classList.contains('open')) {
-    card.classList.remove('open');
-  } else {
-    card.classList.add('open');
-  }
-}
+  DAYS.forEach((d,i)=>{
+    // City divider + food card (once per city)
+    if(d.city!==lastCity){
+      const divEl=document.createElement('div');
+      divEl.className='city-div city-'+d.city.toLowerCase();
+      divEl.innerHTML='<div class="city-div-line"></div><div class="city-div-label">'+esc(d.city)+'</div><div class="city-div-line"></div>';
+      container.appendChild(divEl);
 
-function esc(s) {
-  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-
-function renderDays() {
-  const lx = L[lang];
-  const container = document.getElementById('days-list');
-  container.innerHTML = '';
-
-  let lastCity = null;
-  DAYS.forEach((d, i) => {
-    // City divider
-    if (d.city !== lastCity) {
-      const div = document.createElement('div');
-      div.className = 'city-divider city-' + d.city.toLowerCase();
-      div.innerHTML = '<div class="city-divider-line"></div><div class="city-divider-label">' + esc(d.city) + '</div><div class="city-divider-line"></div>';
-      container.appendChild(div);
-      lastCity = d.city;
+      // Food card
+      const fd=FOOD[d.city];
+      if(fd){
+        const fc=document.createElement('div');
+        fc.className='food-card';
+        fc.id='food-'+d.city;
+        const items=fd.items.map(item=>`
+          <div class="food-item">
+            <div class="food-stars">${starsHTML(item.stars)}</div>
+            <div class="food-info">
+              <div class="food-name">${esc(item.name[lang])}</div>
+              <div class="food-meta">${esc(item.type[lang])} · ${esc(item.price)}</div>
+              <a class="food-link" href="${esc(item.maps)}" target="_blank">Google Maps →</a>
+            </div>
+          </div>`).join('');
+        fc.innerHTML=`
+          <div class="food-header" onclick="toggleCard('food-${d.city}')">
+            <span class="food-header-icon">🍜</span>
+            <div><div class="food-header-text">${esc(lx.foodTitle)}</div><div class="food-header-sub">${esc(lx.foodSub)}</div></div>
+            <span style="margin-left:auto;font-size:16px;color:var(--coral-text)">⌄</span>
+          </div>
+          <div class="food-body">${items}<a class="food-tabelog" href="${esc(fd.tabelog)}" target="_blank">${esc(lx.tabelogLink)}</a></div>`;
+        container.appendChild(fc);
+      }
+      lastCity=d.city;
     }
 
-    const hotelHtml = d.hotel ? `
-      <div class="hotel-block">
-        <span class="hotel-icon">🛏</span>
-        <div>
-          <div class="hotel-name">${esc(d.hotel.name)}</div>
-          <div class="hotel-addr">${esc(d.hotel.addr[lang])}</div>
-          ${d.hotel.phone ? `<div class="hotel-phone">${esc(d.hotel.phone)}</div>` : ''}
-        </div>
-      </div>` : '';
+    // Day card
+    const card=document.createElement('div');
+    card.className='day-card';
+    card.id='day-'+i;
 
-    const transportHtml = d.transport ? `<div style="padding:0 16px"><div class="transport-pill">🚄 ${esc(d.transport[lang])}</div></div>` : '';
+    const transportHtml=d.transport?`<div style="padding:0 16px"><div class="transport-pill">🚄 ${esc(d.transport[lang])}</div></div>`:'';
+    const hotelHtml=d.hotel?`<div class="hotel-block"><span style="font-size:18px;flex-shrink:0">🛏</span><div><div class="hotel-name">${esc(d.hotel.name)}</div><div class="hotel-addr">${esc(d.hotel.addr[lang])}</div>${d.hotel.phone?`<div class="hotel-phone">${esc(d.hotel.phone)}</div>`:''}</div></div>`:'';
 
-    const spotsHtml = d.spots.length ? `
+    const spotsHtml=d.spots.length?`
       <div class="spots-header">${esc(lx.spotsH)}</div>
-      ${d.spots.map(s => `
+      ${d.spots.map(s=>`
         <div class="spot-item">
-          <div class="spot-name">${esc(s.name[lang])}</div>
-          <div class="spot-meta">
-            <div class="spot-meta-row"><span class="spot-meta-icon">📍</span><span>${esc(s.addr)}</span></div>
-            <div class="spot-meta-row"><span class="spot-meta-icon">🕐</span><span>${esc(s.hours[lang])}</span></div>
+          <div class="spot-top">
+            <div class="spot-name">${esc(s.name[lang])}</div>
+            <div class="spot-rating"><div class="stars" style="color:#f59e0b">${starsHTML(s.rating)}</div><div class="rating-label">${esc(lx.ratingLabel)}</div></div>
           </div>
-        </div>`).join('')}` : '';
+          <div class="spot-meta-row"><span>📍</span><span>${esc(s.addr)}</span></div>
+          <div class="spot-meta-row"><span>🕐</span><span>${esc(s.hours[lang])}</span></div>
+          <div class="spot-meta-row" style="margin-top:3px"><span>💬</span><span style="font-style:italic">${esc(s.reason[lang])}</span></div>
+        </div>`).join('')}`:'';
 
-    const card = document.createElement('div');
-    card.className = 'day-card';
-    card.id = 'card-' + i;
-    card.innerHTML = `
-      <div class="day-header" onclick="toggleDay(${i})">
+    card.innerHTML=`
+      <div class="day-header" onclick="toggleCard('day-${i}')">
         <div class="day-badge ${esc(d.badgeClass)}">${esc(lx.dayN[i])}</div>
         <div class="day-meta">
           <div class="day-date-text">${esc(d.date[lang])}</div>
@@ -403,16 +380,13 @@ function renderDays() {
         <span class="chevron">⌄</span>
       </div>
       <div class="day-body">
-        ${transportHtml}
-        ${hotelHtml}
-        ${spotsHtml}
-        ${d.spots.length === 0 && !d.hotel ? '<div class="note-box">✈ ' + esc(d.transport ? d.transport[lang] : '') + '</div>' : ''}
+        ${transportHtml}${hotelHtml}${spotsHtml}
+        ${d.spots.length===0?`<div class="note-box">✈ ${esc(d.transport?d.transport[lang]:'')} </div>`:''}
       </div>`;
     container.appendChild(card);
   });
 }
-
-renderDays();
+render();
 </script>
 </body>
 </html>
